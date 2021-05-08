@@ -42,5 +42,9 @@ const login = obj => {
     return axios.post(`${baseUrl}/api/auth/login`, obj)
 }
 
+const createUser = obj => {
+    return axios.post(`${baseUrl}/api/users`, obj)
+}
 
-export default {getMail, sendMail, login, getSent, deleteMail}
+
+export default {getMail, sendMail, login, getSent, deleteMail, createUser}

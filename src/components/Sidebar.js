@@ -6,11 +6,14 @@ const Sidebar = props => {
        <div className="sidebar">
            <img src={logo} alt="Luna Mail" className="logo"></img>
            <div className={props.page == 'detail' ? 'side-btns-new-mail' : 'side-btns none'}>
-               <div className="btn-pop">reply</div>
+               <div onClick={() => props.replyClicker()} className="btn-pop">reply</div>
                <div onClick={() => props.deleteClicker()} className="btn-pop">delete</div>
            </div>
            <div className={props.page == 'inbox' ? 'side-btns-new-mail' : 'side-btns none'}>
-               <div className="btn-pop">refresh</div>
+               <div onClick={() => props.refreshClicker()} className="btn-pop">refresh</div>
+           </div>
+           <div className={props.page == 'sent' ? 'side-btns-new-mail' : 'side-btns none'}>
+               <div onClick={() => props.refreshClicker()} className="btn-pop">refresh</div>
            </div>
            <div className={props.page == 'new-mail' ? 'side-btns-new-mail' : 'side-btns none'}>
                <div onClick={() => props.sendClicker()} className="btn-pop">send</div>
@@ -19,7 +22,7 @@ const Sidebar = props => {
            <div className="side-btns">
                <div onClick={() => props.newMailClicker()} className="btn">new mail</div>
                <div onClick={() => props.inboxClicker()} className="btn">inbox</div>
-               <div className="btn">sent</div>
+               <div onClick={() => props.sentClicker()} className="btn">sent</div>
                <div className="btn">contacts</div>
                <div className="btn">settings</div>
                <div className="btn">info.</div>

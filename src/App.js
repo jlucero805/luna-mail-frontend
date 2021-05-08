@@ -25,8 +25,12 @@ function App() {
   const [titleInput, setTitleInput] = useState('')
   const [textAreaInput, setTextAreaInput] = useState('')
 
-  useEffect(() => {
-
+  useEffect(async () => {
+    await service.login({
+      username: "this will never work 092348",
+      passHash: 'haha asl; fdalk939465466   23 never'
+    })
+    console.log('requested!')
   }, [])
 
   const mailClicker = async mail => {
@@ -49,23 +53,43 @@ function App() {
   const textAreaInputChanger = e => { setTextAreaInput(e) }
 
   const usernameChanger = e => { setLoginUsername(e) }
-  const passwordChanger = e => {setLoginPassword(e) }
+  const passwordChanger = e => { setLoginPassword(e) }
 
   const deleteClicker = async () => {
-    service.deleteMail(singleMail._id, user)
-    const getAllMail = await service.getMail(user)
-    setAllMail(allMail.filter(mail => mail._id !== singleMail._id))
-    setSingleMail({})
-    setPage('inbox')
+    if (window.confirm("Once you delete, message can never be restored!")) {
+      service.deleteMail(singleMail._id, user)
+      setAllMail(allMail.filter(mail => mail._id !== singleMail._id))
+      setAllSent(allSent.filter(mail => mail._id !== singleMail._id))
+      setSingleMail({})
+      setPage('inbox')
+    }
   }
 
   const sendClicker = async () => {
-    // const newMail = {
-    //   to: toInput,
-    //   from: username,
+    const newMail = {
+      to: toInput,
+      from: username,
+      title: titleInput,
+      content: textAreaInput
+    }
+    const res = await service.sendMail(newMail, user)
+    console.log(res.data)
+    if (res.data.err === 'none') {
+      alert(`User ${toInput} does not exist.`)
+      setToInput('')
+    } else {
+      setToInput('')
+      setTitleInput('')
+      setTextAreaInput('')
+      setPage('inbox')
+    }
+  }
 
-    // }
-    await service.sendMail()
+  const refreshClicker = async () => {
+    const newMail = await service.getMail(user)
+    const newSent = await service.getSent(user)
+    setAllMail(newMail.data)
+    setAllSent(newSent.data)
   }
 
   const logoutClicker = () => {
@@ -80,8 +104,17 @@ function App() {
     setUsername('')
   }
 
+  const sentClicker = () => {
+    setPage('sent')
+  }
+
+  const replyClicker = () => {
+    setToInput(singleMail.from)
+    setPage('new-mail')
+  }
+
   const loginClicker = async () => {
-    const token = await service.login({username: loginUsername, passHash: loginPassword})
+    const token = await service.login({ username: loginUsername, passHash: loginPassword })
     console.log(token.data.accessToken)
     setUser(token.data.accessToken)
     const getAllMail = await service.getMail(token.data.accessToken)
@@ -103,18 +136,21 @@ function App() {
         loginPassword={loginPassword}
         usernameChanger={usernameChanger}
         passwordChanger={passwordChanger}
-        loginClicker={loginClicker}/>
+        loginClicker={loginClicker} />
     )
   } else {
     return (
       <div className="container">
         <Sidebar
           page={page}
+          refreshClicker={refreshClicker}
           logoutClicker={logoutClicker}
           newMailClicker={newMailClicker}
           newMailClear={newMailClear}
           inboxClicker={inboxClicker}
           sendClicker={sendClicker}
+          sentClicker={sentClicker}
+          replyClicker={replyClicker}
           deleteClicker={deleteClicker} />
         <Nav />
         <Content
@@ -125,6 +161,7 @@ function App() {
           titleInputChanger={titleInputChanger}
           textAreaInputChanger={textAreaInputChanger}
           mailClicker={mailClicker}
+          sentMail={allSent}
           mail={allMail}
           singleMail={singleMail}
           page={page} />
