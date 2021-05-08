@@ -73,7 +73,6 @@ function App() {
       content: textAreaInput
     }
     const res = await service.sendMail(newMail, user)
-    console.log(res.data)
     if (res.data.err === 'none') {
       alert(`User ${toInput} does not exist.`)
       setToInput('')
@@ -115,18 +114,15 @@ function App() {
 
   const loginClicker = async () => {
     const token = await service.login({ username: loginUsername, passHash: loginPassword })
-    console.log(token.data.accessToken)
     setUser(token.data.accessToken)
     const getAllMail = await service.getMail(token.data.accessToken)
     setAllMail(getAllMail.data)
-    console.log(getAllMail.data)
     setLogin(false)
     setUsername(loginUsername)
     setLoginUsername('')
     setLoginPassword('')
     const getSentMail = await service.getSent(token.data.accessToken)
     setAllSent(getSentMail.data)
-    console.log(getSentMail.data)
   }
 
   if (login) {
