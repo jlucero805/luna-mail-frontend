@@ -5,7 +5,7 @@ const baseUrl = "https://agile-garden-69829.herokuapp.com"
 const getMail = (token) => {
     const config = {
         headers: {
-            Authorization: `Bearer ${token}`
+            authorization: `Bearer ${token}`
         }
     }
     return axios.get(`${baseUrl}/api/mail`, config)

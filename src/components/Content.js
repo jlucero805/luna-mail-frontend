@@ -57,6 +57,21 @@ const Content = props => {
                     </div>
                 ))}
             </div>
+
+            {/* about page */}
+            <div className={props.page === 'about' ? 'mail-detail' : 'none'}>
+                <h2>Luna Mail</h2>
+                <p className="text">This is a personal project that I created in order to
+                learn more about full stack web development. The technologies
+                that I used to build this app include MongoDB, Express, Node.js, and React to
+                complete the MERN stack. This is an ongoing project where I explore various
+                facets of full stack development such as devops, and cyber security.</p>
+                <p className="text">Come check out the project at:</p>
+                <p className="text">Frontend code:</p>
+                <a href="https://github.com/jlucero805/luna-mail-frontend"url className="text">github.com/jlucero805/luna-mail-frontend</a>
+                <p className="text">Backend code:</p>
+                <a href="https://github.com/jlucero805/luna-mail-back" target="_blank" className="text">github.com/jlucero805/luna-mail-back</a>
+            </div>
         </>
     )
 }

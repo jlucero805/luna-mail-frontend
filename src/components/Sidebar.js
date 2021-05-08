@@ -25,7 +25,7 @@ const Sidebar = props => {
                <div onClick={() => props.sentClicker()} className="btn">sent</div>
                <div className="btn">contacts</div>
                <div className="btn">settings</div>
-               <div className="btn">info.</div>
+               <div onClick={() => props.aboutClicker()} className="btn">about</div>
                <div onClick={() => props.logoutClicker()} className="btn logout-text">logout</div>
            </div>
        </div>

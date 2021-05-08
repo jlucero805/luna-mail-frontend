@@ -112,9 +112,14 @@ function App() {
     setPage('new-mail')
   }
 
+  const aboutClicker = () => {
+    setPage('about')
+  }
+
   const loginClicker = async () => {
     const token = await service.login({ username: loginUsername, passHash: loginPassword })
     setUser(token.data.accessToken)
+    console.log(token.data)
     const getAllMail = await service.getMail(token.data.accessToken)
     setAllMail(getAllMail.data)
     setLogin(false)
@@ -139,6 +144,7 @@ function App() {
       <div className="container">
         <Sidebar
           page={page}
+          aboutClicker={aboutClicker}
           refreshClicker={refreshClicker}
           logoutClicker={logoutClicker}
           newMailClicker={newMailClicker}
