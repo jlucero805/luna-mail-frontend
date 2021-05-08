@@ -91,18 +91,6 @@ function App() {
     setAllSent(newSent.data)
   }
 
-  const logoutClicker = () => {
-    setPage('inbox')
-    // change to true
-    setLogin(true)
-    setUser({})
-    setSingleMail({})
-    setToInput('')
-    setTitleInput('')
-    setTextAreaInput('')
-    setUsername('')
-  }
-
   const sentClicker = () => {
     setPage('sent')
   }
@@ -130,6 +118,20 @@ function App() {
     setAllSent(getSentMail.data)
   }
 
+  const logoutClicker = () => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      setPage('inbox')
+      // change to true
+      setLogin(true)
+      setUser({})
+      setSingleMail({})
+      setToInput('')
+      setTitleInput('')
+      setTextAreaInput('')
+      setUsername('')
+    }
+  }
+
   if (login) {
     return (
       <Login
@@ -154,7 +156,8 @@ function App() {
           sentClicker={sentClicker}
           replyClicker={replyClicker}
           deleteClicker={deleteClicker} />
-        <Nav />
+        <Nav
+          page={page} />
         <Content
           toInput={toInput}
           titleInput={titleInput}

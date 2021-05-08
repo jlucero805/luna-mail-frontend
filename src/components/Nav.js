@@ -1,9 +1,12 @@
 import React from 'react'
 
-const Nav = () => {
+const Nav = props => {
     return (
         <div className="nav">
-            <p className="nav-title">dashboard</p>
+            <p className={props.page === 'inbox' ? 'nav-title' : 'none'}>Inbox</p>
+            <p className={props.page === 'new-mail' ? 'nav-title' : 'none'}>New Mail</p>
+            <p className={props.page === 'sent' ? 'nav-title' : 'none'}>Sent Mail</p>
+            <p className={props.page === 'about' ? 'nav-title' : 'none'}>About</p>
         </div>
     )
 }
