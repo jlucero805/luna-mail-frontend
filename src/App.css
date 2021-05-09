@@ -77,8 +77,9 @@ body {
         border-radius: 1em;
         cursor: pointer;
         color: aliceblue;
-        margin: .1em 0 .2em 0;
+        margin: .1em 0 .4em 0;
         background-color: var(--sidebar-h);
+        background-color: var(--main);
     }
     
     .btn-pop:hover {
