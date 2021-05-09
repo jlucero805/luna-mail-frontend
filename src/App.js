@@ -10,6 +10,7 @@ function App() {
   const [user, setUser] = useState({})
   const [username, setUsername] = useState('')
 
+  const [isLoading, setIsLoading] = useState(false)
   const [login, setLogin] = useState(true)
   const [page, setPage] = useState('inbox')
 
@@ -28,12 +29,14 @@ function App() {
   const [fullscreen, setFullscreen] = useState(false)
 
   useEffect(async () => {
+    setIsLoading(false)
     await service.login({
       username: "this will never work 092348",
       passHash: 'haha asl; fdalk939465466   23 never'
     })
     console.log('requested!')
     if (localStorage.getItem('token')) {
+      setIsLoading(true)
       const getAllMail = await service.getMail(localStorage.getItem('token'))
       setAllMail(getAllMail.data)
       setLogin(false)
@@ -43,6 +46,7 @@ function App() {
       setLoginPassword('')
       const getSentMail = await service.getSent(localStorage.getItem('token'))
       setAllSent(getSentMail.data)
+      setIsLoading(false)
     }
   }, [])
 
@@ -118,6 +122,7 @@ function App() {
   }
 
   const loginClicker = async () => {
+    setIsLoading(true)
     const token = await service.login({ username: loginUsername, passHash: loginPassword })
     setUser(token.data.accessToken)
     localStorage.setItem("token", token.data.accessToken)
@@ -129,6 +134,7 @@ function App() {
     setLoginPassword('')
     const getSentMail = await service.getSent(token.data.accessToken)
     setAllSent(getSentMail.data)
+    setIsLoading(false)
   }
 
   const logoutClicker = () => {
@@ -151,6 +157,7 @@ function App() {
   if (login) {
     return (
       <Login
+        isLoading={isLoading}
         loginUsername={loginUsername}
         loginPassword={loginPassword}
         usernameChanger={usernameChanger}
