@@ -3,7 +3,7 @@ import logo from '../static/luna-mail-logo.svg'
 
 const Sidebar = props => {
    return (
-       <div className="sidebar">
+       <div className={!props.fullscreen ? "sidebar" : "sidebar-gone"}>
            <img src={logo} alt="Luna Mail" className="logo"></img>
            <div className={props.page == 'detail' ? 'side-btns-new-mail' : 'side-btns none'}>
                <div onClick={() => props.replyClicker()} className="btn-pop">reply</div>

@@ -31,17 +31,41 @@ body {
     grid-template-areas:
         "sidebar nav nav nav"
         "sidebar mailbox mailbox mailbox";
+    /* grid-template-areas: "nav nav nav nav"
+        "mailbox mailbox mailbox mailbox"; */
     height: 100vh;
     width: 100vw;
     overflow: auto;
 }
 
+.container-gone {
+    display: grid;
+    grid-template-columns: .5fr repeat(3, 1fr);
+    grid-template-rows: .15fr 2fr;
+    grid-template-areas: 
+      "nav nav nav nav"
+      "mailbox mailbox mailbox mailbox" !important;
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
+}
+
+.sidebar-gone {
+    grid-area: sidebar;
+    background-color: var(--sidebar);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    display: none !important;
+}
 .sidebar {
     grid-area: sidebar;
     background-color: var(--sidebar);
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    /* display: none; */
 }
 
     .logo {
@@ -102,6 +126,12 @@ body {
         padding-left: 1em;
     }
 
+    .hamburger {
+      font-size: 2em;
+      margin: .1em .1em .1em .5em;
+      cursor: pointer;
+    }
+
 .none {
   display: none !important;
 }
@@ -135,7 +165,7 @@ body {
     }
 
     .top {
-        height: 10%;
+        height: 11%;
         width: 100%;
         border-radius: .5em .5em 0 0;
         background-color: var(--top);
@@ -172,6 +202,7 @@ body {
   display: flex;
   justify-content: space-between;
   width: 95%;
+  margin-left: 2em;
 }
 
   .input-text {
@@ -199,6 +230,7 @@ body {
     resize: none;
     color: var(--main-text);
     padding: .5em .2em .5em .2em;
+    margin-left: 2em;
   }
 
 .logout-text {
@@ -297,6 +329,37 @@ body {
       width: 60%;
       height: 80%;
     }
+
+  .input-container {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin-left: 1.5em;
+  }
+
+  .input-input {
+    width: 92%;
+    outline: none;
+    border: none;
+    border-radius: 1em;
+    padding-left: 1em;
+    background-color: var(--mail-background);
+    color: var(--main-text);
+    font-size: 1.3em;
+  }
+
+  .input-textarea {
+    width: 94.8%;
+    height: 85%;
+    outline: none;
+    border: none;
+    border-radius: 1em;
+    background-color: var(--mail-background);
+    resize: none;
+    color: var(--main-text);
+    padding: .5em .2em .5em .2em;
+    margin-left: 1.1;
+  }
 }
 
 @media only screen and (max-width: 1000px) {
@@ -308,6 +371,37 @@ body {
       width: 80%;
       height: 80%;
     }
+
+  .input-container {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin-left: 0em;
+  }
+    
+  .input-input {
+    width: 89%;
+    outline: none;
+    border: none;
+    border-radius: 1em;
+    padding-left: 0em;
+    background-color: var(--mail-background);
+    color: var(--main-text);
+    font-size: 1.3em;
+  }
+
+  .input-textarea {
+    width: 94.8%;
+    height: 85%;
+    outline: none;
+    border: none;
+    border-radius: 1em;
+    background-color: var(--mail-background);
+    resize: none;
+    color: var(--main-text);
+    padding: .5em 0em .5em .2em;
+    margin-left: 0;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -319,4 +413,35 @@ body {
       width: 100%;
       height: 80%;
     }
+
+  .input-container {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin-left: 0em;
+  }
+
+  .input-input {
+    width: 79%;
+    outline: none;
+    border: none;
+    border-radius: 1em;
+    padding-left: 1em;
+    background-color: var(--mail-background);
+    color: var(--main-text);
+    font-size: 1.3em;
+  }
+
+  .input-textarea {
+    width: 94.8%;
+    height: 85%;
+    outline: none;
+    border: none;
+    border-radius: 1em;
+    background-color: var(--mail-background);
+    resize: none;
+    color: var(--main-text);
+    padding: .5em 0em .5em .2em;
+    margin-left: 0;
+  }
 }

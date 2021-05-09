@@ -25,6 +25,8 @@ function App() {
   const [titleInput, setTitleInput] = useState('')
   const [textAreaInput, setTextAreaInput] = useState('')
 
+  const [fullscreen, setFullscreen] = useState(false)
+
   useEffect(async () => {
     await service.login({
       username: "this will never work 092348",
@@ -144,6 +146,8 @@ function App() {
     }
   }
 
+  const fullscreenClicker = () => { setFullscreen(prev => !prev) }
+
   if (login) {
     return (
       <Login
@@ -155,9 +159,10 @@ function App() {
     )
   } else {
     return (
-      <div className="container">
+      <div className={!fullscreen ? "container" : "container-gone"}>
         <Sidebar
           page={page}
+          fullscreen={fullscreen}
           aboutClicker={aboutClicker}
           refreshClicker={refreshClicker}
           logoutClicker={logoutClicker}
@@ -169,6 +174,7 @@ function App() {
           replyClicker={replyClicker}
           deleteClicker={deleteClicker} />
         <Nav
+          fullscreenClicker={fullscreenClicker}
           page={page} />
         <Content
           toInput={toInput}
