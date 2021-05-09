@@ -174,6 +174,7 @@ function App() {
           replyClicker={replyClicker}
           deleteClicker={deleteClicker} />
         <Nav
+          fullscreen={fullscreen}
           fullscreenClicker={fullscreenClicker}
           page={page} />
         <Content
