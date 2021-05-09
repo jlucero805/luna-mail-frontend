@@ -31,6 +31,17 @@ function App() {
       passHash: 'haha asl; fdalk939465466   23 never'
     })
     console.log('requested!')
+    if (localStorage.getItem('token')) {
+      const getAllMail = await service.getMail(localStorage.getItem('token'))
+      setAllMail(getAllMail.data)
+      setLogin(false)
+      const getUsername = await service.getUsername(localStorage.getItem('token'))
+      setUsername(getUsername.data.name)
+      setLoginUsername('')
+      setLoginPassword('')
+      const getSentMail = await service.getSent(localStorage.getItem('token'))
+      setAllSent(getSentMail.data)
+    }
   }, [])
 
   const mailClicker = async mail => {
@@ -107,7 +118,7 @@ function App() {
   const loginClicker = async () => {
     const token = await service.login({ username: loginUsername, passHash: loginPassword })
     setUser(token.data.accessToken)
-    console.log(token.data)
+    localStorage.setItem("token", token.data.accessToken)
     const getAllMail = await service.getMail(token.data.accessToken)
     setAllMail(getAllMail.data)
     setLogin(false)

@@ -11,6 +11,15 @@ const getMail = (token) => {
     return axios.get(`${baseUrl}/api/mail`, config)
 }
 
+const getUsername = token => {
+    const config = {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    }
+    return axios.get(`${baseUrl}/api/users`, config)
+}
+
 const getSent = (token) => {
     const config = {
         headers: {
@@ -47,4 +56,4 @@ const createUser = obj => {
 }
 
 
-export default {getMail, sendMail, login, getSent, deleteMail, createUser}
+export default {getMail, sendMail, login, getSent, deleteMail, createUser, getUsername}
