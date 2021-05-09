@@ -186,6 +186,7 @@ body {
     padding-left: 1em;
     background-color: var(--mail-background);
     color: var(--main-text);
+    font-size: 1.3em;
   }
 
   .input-textarea {
