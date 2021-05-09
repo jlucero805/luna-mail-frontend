@@ -140,6 +140,7 @@ function App() {
       setTitleInput('')
       setTextAreaInput('')
       setUsername('')
+      localStorage.removeItem('token')
     }
   }
 
