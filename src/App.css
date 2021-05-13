@@ -103,7 +103,10 @@ body {
         display: flex;
         flex-direction: column;
         width: 70%;
+        max-height: 5000px;
         border-bottom: 1px solid black;
+        transition: all 2s ease-in-out;
+        overflow: hidden;
     }
 
     .btn {
@@ -111,6 +114,7 @@ body {
         border-radius: 1em;
         cursor: pointer;
         color: aliceblue;
+        transition: background-color 300ms ease;
     }
 
     .btn-pop {
@@ -121,6 +125,9 @@ body {
         margin: .1em 0 .4em 0;
         background-color: var(--sidebar-h);
         background-color: var(--main);
+        max-height: 500px;
+        flex: 1;
+        transition: all 1s ease;
     }
     
     .btn-pop:hover {
@@ -159,6 +166,12 @@ body {
 
 .none {
   display: none !important;
+  flex: 0;
+}
+
+.none-1 {
+  display: none !important;
+  max-height: 0;
 }
 
 .mail-detail {

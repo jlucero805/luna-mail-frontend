@@ -5,7 +5,7 @@ const Sidebar = props => {
    return (
        <div className={!props.fullscreen ? "sidebar" : "sidebar-gone"}>
            <img src={logo} alt="Luna Mail" className="logo"></img>
-           <div className={props.page == 'detail' ? 'side-btns-new-mail' : 'side-btns none'}>
+           <div className={props.page == 'detail' ? 'side-btns-new-mail' : 'side-btns none-1'}>
                <div onClick={() => props.replyClicker()} className="btn-pop">reply</div>
                <div onClick={() => props.deleteClicker()} className="btn-pop">delete</div>
            </div>

@@ -38,6 +38,7 @@ function App() {
     if (localStorage.getItem('token')) {
       setIsLoading(true)
       const getAllMail = await service.getMail(localStorage.getItem('token'))
+      setUser(localStorage.getItem('token'))
       setAllMail(getAllMail.data)
       setLogin(false)
       const getUsername = await service.getUsername(localStorage.getItem('token'))
