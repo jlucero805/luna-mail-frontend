@@ -56,4 +56,12 @@ const createUser = obj => {
 }
 
 
-export default {getMail, sendMail, login, getSent, deleteMail, createUser, getUsername}
+export default {
+    getMail,
+    sendMail,
+    login,
+    getSent,
+    deleteMail,
+    createUser,
+    getUsername
+}

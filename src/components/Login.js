@@ -7,7 +7,6 @@ const Login = props => {
     const [newUsername, setNewUsername] = useState('')
     const [newPassword, setNewPassword] = useState('')
 
-
     const createUserClicker = () => {
         setLoginPage('createUser')
     }
@@ -35,13 +34,8 @@ const Login = props => {
         setLoginPage('login')
     }
 
-    const newUsernameChanger = e => {
-        setNewUsername(e)
-    }
-
-    const newPasswordChanger = e => {
-        setNewPassword(e)
-    }
+    const newUsernameChanger = e => { setNewUsername(e) }
+    const newPasswordChanger = e => { setNewPassword(e) }
 
     return (
         <>

@@ -7,6 +7,7 @@ import Login from './components/Login';
 import service from './services/service';
 
 function App() {
+  //user details, user is stored in form of token
   const [user, setUser] = useState({})
   const [username, setUsername] = useState('')
 
@@ -26,8 +27,10 @@ function App() {
   const [titleInput, setTitleInput] = useState('')
   const [textAreaInput, setTextAreaInput] = useState('')
 
+  //variable that toggles hamburger menu
   const [fullscreen, setFullscreen] = useState(false)
 
+  //auto login if token is in localStorage
   useEffect(async () => {
     setIsLoading(false)
     await service.login({
@@ -51,14 +54,23 @@ function App() {
     }
   }, [])
 
+  //Changers
+  const toInputChanger = e => { setToInput(e) }
+  const titleInputChanger = e => { setTitleInput(e) }
+  const textAreaInputChanger = e => { setTextAreaInput(e) }
+  const usernameChanger = e => { setLoginUsername(e) }
+  const passwordChanger = e => { setLoginPassword(e) }
+
+  //Clickers
+  const newMailClicker = () => { setPage('new-mail') }
+  const inboxClicker = () => { setPage('inbox') }
+  const fullscreenClicker = () => { setFullscreen(prev => !prev) }
+
+  //Opens up single mail into detail page
   const mailClicker = async mail => {
     setSingleMail(mail)
     setPage('detail')
   }
-
-  const newMailClicker = () => { setPage('new-mail') }
-
-  const inboxClicker = () => { setPage('inbox') }
 
   const newMailClear = () => {
     setToInput('')
@@ -66,12 +78,6 @@ function App() {
     setTextAreaInput('')
   }
 
-  const toInputChanger = e => { setToInput(e) }
-  const titleInputChanger = e => { setTitleInput(e) }
-  const textAreaInputChanger = e => { setTextAreaInput(e) }
-
-  const usernameChanger = e => { setLoginUsername(e) }
-  const passwordChanger = e => { setLoginPassword(e) }
 
   const deleteClicker = async () => {
     if (window.confirm("Once you delete, message can never be restored!")) {
@@ -152,8 +158,6 @@ function App() {
       localStorage.removeItem('token')
     }
   }
-
-  const fullscreenClicker = () => { setFullscreen(prev => !prev) }
 
   if (login) {
     return (
