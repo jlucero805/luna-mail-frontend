@@ -34,10 +34,10 @@ function App() {
   useEffect(async () => {
     setIsLoading(false)
     await service.login({
+      setIsLoading(true)
       username: "this will never work 092348",
       passHash: 'haha asl; fdalk939465466   23 never'
     })
-    console.log('requested!')
     if (localStorage.getItem('token')) {
       setIsLoading(true)
       const getAllMail = await service.getMail(localStorage.getItem('token'))
