@@ -32,9 +32,8 @@ function App() {
 
   //auto login if token is in localStorage
   useEffect(async () => {
-    setIsLoading(false)
+    setIsLoading(true)
     await service.login({
-      setIsLoading(true)
       username: "this will never work 092348",
       passHash: 'haha asl; fdalk939465466   23 never'
     })
