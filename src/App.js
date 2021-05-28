@@ -8,6 +8,7 @@ import service from './services/service';
 import MailContext from './Contexts/MailContext';
 import NewMailContext from './Contexts/NewMailContext';
 import UserContext from './Contexts/UserContext'
+import LoginContext from './Contexts/LoginContext';
 
 function App() {
   //user details, user is stored in form of token
@@ -53,92 +54,53 @@ function App() {
       const getSentMail = await service.getSent(localStorage.getItem('token'))
       setAllSent(getSentMail.data)
       setIsLoading(false)
+    } else {
+      setIsLoading(false);
     }
   }, [])
 
-  //Changers
-  const usernameChanger = e => { setLoginUsername(e) }
-  const passwordChanger = e => { setLoginPassword(e) }
-
   //Clickers
-  const newMailClicker = () => { setPage('new-mail') }
-  const inboxClicker = () => { setPage('inbox') }
   const fullscreenClicker = () => { setFullscreen(prev => !prev) }
-
-
-  const newMailClear = () => {
-    setToInput('')
-    setTitleInput('')
-    setTextAreaInput('')
-  }
-
-  const sendClicker = async () => {
-    const newMail = {
-      to: toInput,
-      from: username,
-      title: titleInput,
-      content: textAreaInput
-    }
-    const res = await service.sendMail(newMail, user)
-    if (res.data.err === 'none') {
-      alert(`User ${toInput} does not exist.`)
-      setToInput('')
-    } else {
-      setToInput('')
-      setTitleInput('')
-      setTextAreaInput('')
-      setPage('inbox')
-    }
-  }
-
-  const sentClicker = () => {
-    setPage('sent')
-  }
-
-  const aboutClicker = () => {
-    setPage('about')
-  }
-
-  const loginClicker = async () => {
-    setIsLoading(true)
-    const token = await service.login({ username: loginUsername, passHash: loginPassword })
-    setUser(token.data.accessToken)
-    localStorage.setItem("token", token.data.accessToken)
-    const getAllMail = await service.getMail(token.data.accessToken)
-    setAllMail(getAllMail.data)
-    setLogin(false)
-    setUsername(loginUsername)
-    setLoginUsername('')
-    setLoginPassword('')
-    const getSentMail = await service.getSent(token.data.accessToken)
-    setAllSent(getSentMail.data)
-    setIsLoading(false)
-  }
-
-  const logoutClicker = () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      setPage('inbox')
-      // change to true
-      setLogin(true)
-      setUser({})
-      setSingleMail({})
-      setToInput('')
-      setTitleInput('')
-      setTextAreaInput('')
-      setUsername('')
-      localStorage.removeItem('token')
-    }
-  }
 
   if (login) {
     return (
-      <Login
-        isLoading={isLoading}
-        loginUsername={loginUsername}
-        loginPassword={loginPassword}
-        usernameChanger={usernameChanger}
-        passwordChanger={passwordChanger}
-        loginClicker={loginClicker} />
+      <MailContext.Provider value={{
+        singleMail, setSingleMail,
+        allMail, setAllMail,
+        allSent, setAllSent,
+        page, setPage
+      }}>
+        <NewMailContext.Provider value={{
+          toInput, setToInput,
+          titleInput, setTitleInput,
+          textAreaInput, setTextAreaInput
+        }}>
+          <UserContext.Provider value={{
+            user, setUser,
+            username, setUsername
+          }}>
+            <LoginContext.Provider value={{
+              login, setLogin,
+              loginUsername, loginPassword,
+              setLoginUsername, setLoginPassword,
+              isLoading, setIsLoading
+            }}>
+              {login
+                ? <Login />
+                : <div className={!fullscreen ? "container" : "container-gone"}>
+                <Sidebar
+                  fullscreen={fullscreen}
+                />
+                <Nav
+                  fullscreen={fullscreen}
+                  fullscreenClicker={fullscreenClicker}
+                  page={page} />
+                <Content />
+              </div>}
+            </LoginContext.Provider>
+          </UserContext.Provider>
+        </NewMailContext.Provider>
+      </MailContext.Provider>
     )
   } else {
     return (
@@ -154,27 +116,26 @@ function App() {
           textAreaInput, setTextAreaInput
         }}>
           <UserContext.Provider value={{
-            user, setUser
+            user, setUser,
+            username, setUsername
           }}>
-          <div className={!fullscreen ? "container" : "container-gone"}>
-            <Sidebar
-              page={page}
-              fullscreen={fullscreen}
-              aboutClicker={aboutClicker}
-              logoutClicker={logoutClicker}
-              newMailClicker={newMailClicker}
-              newMailClear={newMailClear}
-              inboxClicker={inboxClicker}
-              sendClicker={sendClicker}
-              sentClicker={sentClicker}
-              />
-            <Nav
-              fullscreen={fullscreen}
-              fullscreenClicker={fullscreenClicker}
-              page={page} />
-            <Content
-              page={page} />
-          </div>
+            <LoginContext.Provider value={{
+              login, setLogin,
+              loginUsername, loginPassword,
+              setLoginUsername, setLoginPassword,
+              isLoading, setIsLoading
+            }}>
+              <div className={!fullscreen ? "container" : "container-gone"}>
+                <Sidebar
+                  fullscreen={fullscreen}
+                />
+                <Nav
+                  fullscreen={fullscreen}
+                  fullscreenClicker={fullscreenClicker}
+                  page={page} />
+                <Content />
+              </div>
+            </LoginContext.Provider>
           </UserContext.Provider>
         </NewMailContext.Provider>
       </MailContext.Provider>
