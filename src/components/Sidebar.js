@@ -5,16 +5,18 @@ import NewMailContext from '../Contexts/NewMailContext'
 import UserContext from '../Contexts/UserContext'
 import LoginContext from '../Contexts/LoginContext'
 import service from '../services/service'
+import { MailProvider, useMail } from '../Contexts/MailProvider'
+import { NewMailProvider, useNewMail } from '../Contexts/NewMailProvider'
 
 const Sidebar = props => {
-    const { page, setPage } = useContext(MailContext);
-    const { allMail, setAllMail } = useContext(MailContext);
-    const { allSent, setAllSent } = useContext(MailContext);
-    const { singleMail, setSingleMail } = useContext(MailContext);
+    const {allMail, setAllMail} = useMail();
+    const {allSent, setAllSent} = useMail();
+    const {singleMail, setSingleMail} = useMail();
+    const {page, setPage} = useMail();
 
-    const { toInput, setToInput } = useContext(NewMailContext);
-    const { titleInput, setTitleInput } = useContext(NewMailContext);
-    const { textAreaInput, setTextAreaInput } = useContext(NewMailContext);
+    const { toInput, setToInput } = useNewMail();
+    const { titleInput, setTitleInput } = useNewMail();
+    const { textAreaInput, setTextAreaInput } = useNewMail();
 
     const { user, setUser } = useContext(UserContext);
     const { username, setUsername } = useContext(UserContext);

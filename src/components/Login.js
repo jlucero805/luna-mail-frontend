@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import logo from '../static/luna-mail-logo.svg'
 import service from '../services/service'
 import LoginContext from '../Contexts/LoginContext'
-import MailContext from '../Contexts/MailContext'
 import UserContext from '../Contexts/UserContext'
+import { MailProvider, useMail } from '../Contexts/MailProvider'
 
 const Login = props => {
     const { loginUsername, setLoginUsername } = useContext(LoginContext);
@@ -11,10 +11,8 @@ const Login = props => {
     const { isLoading, setIsLoading } = useContext(LoginContext);
     const { login, setLogin } = useContext(LoginContext);
 
-    const {allMail, setAllMail} = useContext(MailContext);
-    const {allSent, setAllSent} = useContext(MailContext);
-    const {singleMail, setSingleMail} = useContext(MailContext);
-    const {page, setPage} = useContext(MailContext);
+    const { allMail, setAllMail } = useMail();
+    const { allSent, setAllSent } = useMail();
 
     const { user, setUser } = useContext(UserContext);
     const { username, setUsername } = useContext(UserContext);
@@ -22,6 +20,31 @@ const Login = props => {
     const [loginPage, setLoginPage] = useState('login');
     const [newUsername, setNewUsername] = useState('');
     const [newPassword, setNewPassword] = useState('');
+
+    //auto login if token is in localStorage
+    useEffect(async () => {
+        setIsLoading(true)
+        await service.login({
+            username: "this will never work 092348",
+            passHash: 'haha asl; fdalk939465466   23 never'
+        })
+        if (localStorage.getItem('token')) {
+            setIsLoading(true)
+            const getAllMail = await service.getMail(localStorage.getItem('token'))
+            setUser(localStorage.getItem('token'))
+            setAllMail(getAllMail.data)
+            setLogin(false)
+            const getUsername = await service.getUsername(localStorage.getItem('token'))
+            setUsername(getUsername.data.name)
+            setLoginUsername('')
+            setLoginPassword('')
+            const getSentMail = await service.getSent(localStorage.getItem('token'))
+            setAllSent(getSentMail.data)
+            setIsLoading(false)
+        } else {
+            setIsLoading(false);
+        }
+    }, [])
 
     const createUserClicker = () => { setLoginPage('createUser'); }
 

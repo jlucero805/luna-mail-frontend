@@ -2,16 +2,18 @@ import React, { useContext } from 'react'
 import dates from '../utils/dates'
 import MailContext from '../Contexts/MailContext'
 import NewMailContext from '../Contexts/NewMailContext'
+import { MailProvider, useMail } from '../Contexts/MailProvider'
+import { NewMailProvider, useNewMail } from '../Contexts/NewMailProvider'
 
 const Content = props => {
-    const {allMail, setAllMail} = useContext(MailContext);
-    const {allSent, setAllSent} = useContext(MailContext);
-    const {singleMail, setSingleMail} = useContext(MailContext);
-    const {page, setPage} = useContext(MailContext);
+    const {allMail, setAllMail} = useMail();
+    const {allSent, setAllSent} = useMail();
+    const {singleMail, setSingleMail} = useMail();
+    const {page, setPage} = useMail();
 
-    const {toInput, setToInput} = useContext(NewMailContext);
-    const {titleInput, setTitleInput} = useContext(NewMailContext);
-    const {textAreaInput, setTextAreaInput} = useContext(NewMailContext);
+    const { toInput, setToInput } = useNewMail();
+    const { titleInput, setTitleInput } = useNewMail();
+    const { textAreaInput, setTextAreaInput } = useNewMail();
 
     const mailClicker = mail => {
         setSingleMail(mail);
@@ -87,7 +89,7 @@ const Content = props => {
                     facets of full stack development such as devops, and cyber security.</p>
                 <p className="text">Come check out the project at:</p>
                 <p className="text">Frontend code:</p>
-                <a href="https://github.com/jlucero805/luna-mail-frontend" url className="text">github.com/jlucero805/luna-mail-frontend</a>
+                <a href="https://github.com/jlucero805/luna-mail-frontend" className="text">github.com/jlucero805/luna-mail-frontend</a>
                 <p className="text">Backend code:</p>
                 <a href="https://github.com/jlucero805/luna-mail-back" target="_blank" className="text">github.com/jlucero805/luna-mail-back</a>
             </div>
