@@ -5,6 +5,9 @@ import Content from './components/Content';
 import './App.css';
 import Login from './components/Login';
 import service from './services/service';
+import MailContext from './Contexts/MailContext';
+import NewMailContext from './Contexts/NewMailContext';
+import UserContext from './Contexts/UserContext'
 
 function App() {
   //user details, user is stored in form of token
@@ -54,9 +57,6 @@ function App() {
   }, [])
 
   //Changers
-  const toInputChanger = e => { setToInput(e) }
-  const titleInputChanger = e => { setTitleInput(e) }
-  const textAreaInputChanger = e => { setTextAreaInput(e) }
   const usernameChanger = e => { setLoginUsername(e) }
   const passwordChanger = e => { setLoginPassword(e) }
 
@@ -65,27 +65,11 @@ function App() {
   const inboxClicker = () => { setPage('inbox') }
   const fullscreenClicker = () => { setFullscreen(prev => !prev) }
 
-  //Opens up single mail into detail page
-  const mailClicker = async mail => {
-    setSingleMail(mail)
-    setPage('detail')
-  }
 
   const newMailClear = () => {
     setToInput('')
     setTitleInput('')
     setTextAreaInput('')
-  }
-
-
-  const deleteClicker = async () => {
-    if (window.confirm("Once you delete, message can never be restored!")) {
-      service.deleteMail(singleMail._id, user)
-      setAllMail(allMail.filter(mail => mail._id !== singleMail._id))
-      setAllSent(allSent.filter(mail => mail._id !== singleMail._id))
-      setSingleMail({})
-      setPage('inbox')
-    }
   }
 
   const sendClicker = async () => {
@@ -107,20 +91,8 @@ function App() {
     }
   }
 
-  const refreshClicker = async () => {
-    const newMail = await service.getMail(user)
-    const newSent = await service.getSent(user)
-    setAllMail(newMail.data)
-    setAllSent(newSent.data)
-  }
-
   const sentClicker = () => {
     setPage('sent')
-  }
-
-  const replyClicker = () => {
-    setToInput(singleMail.from)
-    setPage('new-mail')
   }
 
   const aboutClicker = () => {
@@ -170,37 +142,42 @@ function App() {
     )
   } else {
     return (
-      <div className={!fullscreen ? "container" : "container-gone"}>
-        <Sidebar
-          page={page}
-          fullscreen={fullscreen}
-          aboutClicker={aboutClicker}
-          refreshClicker={refreshClicker}
-          logoutClicker={logoutClicker}
-          newMailClicker={newMailClicker}
-          newMailClear={newMailClear}
-          inboxClicker={inboxClicker}
-          sendClicker={sendClicker}
-          sentClicker={sentClicker}
-          replyClicker={replyClicker}
-          deleteClicker={deleteClicker} />
-        <Nav
-          fullscreen={fullscreen}
-          fullscreenClicker={fullscreenClicker}
-          page={page} />
-        <Content
-          toInput={toInput}
-          titleInput={titleInput}
-          textAreaInput={textAreaInput}
-          toInputChanger={toInputChanger}
-          titleInputChanger={titleInputChanger}
-          textAreaInputChanger={textAreaInputChanger}
-          mailClicker={mailClicker}
-          sentMail={allSent}
-          mail={allMail}
-          singleMail={singleMail}
-          page={page} />
-      </div>
+      <MailContext.Provider value={{
+        singleMail, setSingleMail,
+        allMail, setAllMail,
+        allSent, setAllSent,
+        page, setPage
+      }}>
+        <NewMailContext.Provider value={{
+          toInput, setToInput,
+          titleInput, setTitleInput,
+          textAreaInput, setTextAreaInput
+        }}>
+          <UserContext.Provider value={{
+            user, setUser
+          }}>
+          <div className={!fullscreen ? "container" : "container-gone"}>
+            <Sidebar
+              page={page}
+              fullscreen={fullscreen}
+              aboutClicker={aboutClicker}
+              logoutClicker={logoutClicker}
+              newMailClicker={newMailClicker}
+              newMailClear={newMailClear}
+              inboxClicker={inboxClicker}
+              sendClicker={sendClicker}
+              sentClicker={sentClicker}
+              />
+            <Nav
+              fullscreen={fullscreen}
+              fullscreenClicker={fullscreenClicker}
+              page={page} />
+            <Content
+              page={page} />
+          </div>
+          </UserContext.Provider>
+        </NewMailContext.Provider>
+      </MailContext.Provider>
     );
   }
 }
