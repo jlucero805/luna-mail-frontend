@@ -8,6 +8,7 @@ import UserContext from './Contexts/UserContext'
 import LoginContext from './Contexts/LoginContext';
 import { MailProvider } from './Contexts/MailProvider'
 import { NewMailProvider } from './Contexts/NewMailProvider';
+import { LoginProvider } from './Contexts/LoginProvider';
 
 /*
 TODO
