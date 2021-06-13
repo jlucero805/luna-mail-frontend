@@ -22,25 +22,34 @@ const Login = props => {
     const [newPassword, setNewPassword] = useState('');
 
     //auto login if token is in localStorage
-    useEffect(async () => {
+    useEffect(() => {
         setIsLoading(true)
-        await service.login({
+        service.login({
             username: "this will never work 092348",
             passHash: 'haha asl; fdalk939465466   23 never'
         })
         if (localStorage.getItem('token')) {
             setIsLoading(true)
-            const getAllMail = await service.getMail(localStorage.getItem('token'))
-            setUser(localStorage.getItem('token'))
-            setAllMail(getAllMail.data)
-            setLogin(false)
-            const getUsername = await service.getUsername(localStorage.getItem('token'))
-            setUsername(getUsername.data.name)
-            setLoginUsername('')
-            setLoginPassword('')
-            const getSentMail = await service.getSent(localStorage.getItem('token'))
-            setAllSent(getSentMail.data)
-            setIsLoading(false)
+            service.getMail(localStorage.getItem('token'))
+                .then(res => {
+                    service.getMail(localStorage.getItem('token'))
+                    setUser(localStorage.getItem('token'))
+                    setAllMail(res.data)
+                    setLogin(false)
+                })
+
+            service.getUsername(localStorage.getItem('token'))
+                .then(res => {
+                    setUsername(res.data.name)
+                    setLoginUsername('')
+                    setLoginPassword('')
+                })
+
+            service.getSent(localStorage.getItem('token'))
+                .then(res => {
+                    setAllSent(res.data)
+                    setIsLoading(false)
+                })
         } else {
             setIsLoading(false);
         }

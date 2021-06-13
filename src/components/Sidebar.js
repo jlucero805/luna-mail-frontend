@@ -73,6 +73,8 @@ const Sidebar = props => {
     const newMailClicker = () => { setPage('new-mail') }
     const inboxClicker = () => { setPage('inbox') }
     const sentClicker = () => { setPage('sent') }
+    const contactsClicker = () => {setPage('contacts')}
+    const settingsClicker = () => {setPage('settings')}
     const aboutClicker = () => { setPage('about') }
 
     const logoutClicker = () => {
@@ -110,8 +112,8 @@ const Sidebar = props => {
                 <div onClick={() => newMailClicker()} className="btn">new mail</div>
                 <div onClick={() => inboxClicker()} className="btn">inbox</div>
                 <div onClick={() => sentClicker()} className="btn">sent</div>
-                <div className="btn">contacts</div>
-                <div className="btn">settings</div>
+                <div onClick={() => contactsClicker()} className="btn">contacts</div>
+                <div onClick={() => settingsClicker()} className="btn">settings</div>
                 <div onClick={() => aboutClicker()} className="btn">about</div>
                 <div onClick={() => logoutClicker()} className="btn logout-text">logout</div>
             </div>

@@ -93,6 +93,18 @@ const Content = props => {
                 <p className="text">Backend code:</p>
                 <a href="https://github.com/jlucero805/luna-mail-back" target="_blank" className="text">github.com/jlucero805/luna-mail-back</a>
             </div>
+
+            {/* contacts */}
+            <div className={page === 'contacts' ? 'mail-detail' : 'none'}>
+                <h2>Contacts</h2>
+                <p className="text">You have 0 contacts</p>
+            </div>
+
+            {/* settings */}
+            <div className={page === 'settings' ? 'mail-detail' : 'none'}>
+                <h2>Settings</h2>
+                <p className="text">settings</p>
+            </div>
         </>
     )
 }
