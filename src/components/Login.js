@@ -5,6 +5,7 @@ import LoginContext from '../Contexts/LoginContext'
 import UserContext from '../Contexts/UserContext'
 import { MailProvider, useMail } from '../Contexts/MailProvider'
 import { LoginProvider, useLogin } from '../Contexts/LoginProvider'
+import { UserProvider, useUser } from '../Contexts/UserProvider'
 
 const Login = props => {
     const { loginUsername, setLoginUsername } = useContext(LoginContext);
@@ -15,8 +16,11 @@ const Login = props => {
     const { allMail, setAllMail } = useMail();
     const { allSent, setAllSent } = useMail();
 
-    const { user, setUser } = useContext(UserContext);
-    const { username, setUsername } = useContext(UserContext);
+    // const { user, setUser } = useContext(UserContext);
+    // const { username, setUsername } = useContext(UserContext);
+
+    const { user, setUser } = useUser();
+    const { username, setUsername } = useUser();
 
     const [loginPage, setLoginPage] = useState('login');
     const [newUsername, setNewUsername] = useState('');

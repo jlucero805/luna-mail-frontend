@@ -55,6 +55,15 @@ const createUser = obj => {
     return axios.post(`${baseUrl}/api/users`, obj)
 }
 
+const getContacts = token => {
+    const config = {
+        headers: {
+            authorization: `Bearer ${token}`
+        }
+    }
+    return axios.get(`${baseUrl}/api/users/contacts`, config)
+}
+
 
 export default {
     getMail,
@@ -63,5 +72,6 @@ export default {
     getSent,
     deleteMail,
     createUser,
-    getUsername
+    getUsername,
+    getContacts
 }

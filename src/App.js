@@ -9,6 +9,7 @@ import LoginContext from './Contexts/LoginContext';
 import { MailProvider } from './Contexts/MailProvider'
 import { NewMailProvider } from './Contexts/NewMailProvider';
 import { LoginProvider } from './Contexts/LoginProvider';
+import { UserProvider } from './Contexts/UserProvider'
 
 /*
 TODO
@@ -36,37 +37,33 @@ function App() {
   return (
     <MailProvider>
       <NewMailProvider>
-        {/* <NewMailContext.Provider value={{
-          toInput, setToInput,
-          titleInput, setTitleInput,
-          textAreaInput, setTextAreaInput
+        {/* <UserContext.Provider value={{
+          user, setUser,
+          username, setUsername
         }}> */}
-          <UserContext.Provider value={{
-            user, setUser,
-            username, setUsername
-          }}>
+          <UserProvider>
             <LoginContext.Provider value={{
               login, setLogin,
               loginUsername, loginPassword,
               setLoginUsername, setLoginPassword,
               isLoading, setIsLoading
             }}>
-              {login
-                ? <Login />
-                : <div className={!fullscreen ? "container" : "container-gone"}>
-                  <Sidebar
-                    fullscreen={fullscreen}
-                  />
-                  <Nav
-                    fullscreen={fullscreen}
-                    fullscreenClicker={fullscreenClicker}/>
-                  <Content />
-                </div>}
+            {login
+              ? <Login />
+              : <div className={!fullscreen ? "container" : "container-gone"}>
+                <Sidebar
+                  fullscreen={fullscreen}
+                />
+                <Nav
+                  fullscreen={fullscreen}
+                  fullscreenClicker={fullscreenClicker} />
+                <Content />
+              </div>}
             </LoginContext.Provider>
-          </UserContext.Provider>
-        {/* </NewMailContext.Provider> */}
+          </UserProvider>
+        {/* </UserContext.Provider> */}
       </NewMailProvider>
-    </MailProvider>
+    </MailProvider >
   )
 }
 
