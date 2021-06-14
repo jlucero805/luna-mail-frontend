@@ -10,6 +10,8 @@ const Nav = props => {
             <p className={page === 'new-mail' ? 'nav-title' : 'none'}>New Mail</p>
             <p className={page === 'sent' ? 'nav-title' : 'none'}>Sent Mail</p>
             <p className={page === 'about' ? 'nav-title' : 'none'}>About</p>
+            <p className={page === 'contacts' ? 'nav-title' : 'none'}>Contacts</p>
+            <p className={page === 'settings' ? 'nav-title' : 'none'}>Settings</p>
         </div>
     )
 }
