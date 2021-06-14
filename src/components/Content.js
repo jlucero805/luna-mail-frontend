@@ -7,16 +7,16 @@ import { NewMailProvider, useNewMail } from '../Contexts/NewMailProvider'
 import { UserProvider, useUser } from '../Contexts/UserProvider'
 
 const Content = props => {
-    const {allMail, setAllMail} = useMail();
-    const {allSent, setAllSent} = useMail();
-    const {singleMail, setSingleMail} = useMail();
-    const {page, setPage} = useMail();
+    const { allMail, setAllMail } = useMail();
+    const { allSent, setAllSent } = useMail();
+    const { singleMail, setSingleMail } = useMail();
+    const { page, setPage } = useMail();
 
     const { toInput, setToInput } = useNewMail();
     const { titleInput, setTitleInput } = useNewMail();
     const { textAreaInput, setTextAreaInput } = useNewMail();
 
-    const {contacts, setContacts } = useUser();
+    const { contacts, setContacts } = useUser();
 
     const mailClicker = mail => {
         setSingleMail(mail);
@@ -26,6 +26,11 @@ const Content = props => {
     const toInputChanger = e => { setToInput(e) }
     const titleInputChanger = e => { setTitleInput(e) }
     const textAreaInputChanger = e => { setTextAreaInput(e) }
+
+    const respondContact = con => {
+        setPage('new-mail');
+        setToInput(con);
+    }
 
     return (
         <>
@@ -102,12 +107,16 @@ const Content = props => {
                 <h2>Contacts</h2>
                 {contacts
                     ? contacts.map(contact => (
-                        <div key={contact}>
+                        <div className="single-contact" key={contact}>
                             <p className="text">{contact}</p>
+                            <div className="contact-btns">
+                                <div onClick={() => respondContact(contact)} className="contact-msg">msg</div>
+                                <div className="contact-del">del</div>
+                            </div>
                         </div>
                     ))
-                    : <p className="text">You have 0 contacts</p>}
-                
+                    : <p className="contact-text">You have 0 contacts</p>}
+
             </div>
 
             {/* settings */}
