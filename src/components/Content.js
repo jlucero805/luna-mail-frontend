@@ -4,6 +4,7 @@ import MailContext from '../Contexts/MailContext'
 import NewMailContext from '../Contexts/NewMailContext'
 import { MailProvider, useMail } from '../Contexts/MailProvider'
 import { NewMailProvider, useNewMail } from '../Contexts/NewMailProvider'
+import { UserProvider, useUser } from '../Contexts/UserProvider'
 
 const Content = props => {
     const {allMail, setAllMail} = useMail();
@@ -14,6 +15,8 @@ const Content = props => {
     const { toInput, setToInput } = useNewMail();
     const { titleInput, setTitleInput } = useNewMail();
     const { textAreaInput, setTextAreaInput } = useNewMail();
+
+    const {contacts, setContacts } = useUser();
 
     const mailClicker = mail => {
         setSingleMail(mail);
@@ -97,7 +100,14 @@ const Content = props => {
             {/* contacts */}
             <div className={page === 'contacts' ? 'mail-detail' : 'none'}>
                 <h2>Contacts</h2>
-                <p className="text">You have 0 contacts</p>
+                {contacts
+                    ? contacts.map(contact => (
+                        <div key={contact}>
+                            <p className="text">{contact}</p>
+                        </div>
+                    ))
+                    : <p className="text">You have 0 contacts</p>}
+                
             </div>
 
             {/* settings */}

@@ -16,11 +16,10 @@ const Login = props => {
     const { allMail, setAllMail } = useMail();
     const { allSent, setAllSent } = useMail();
 
-    // const { user, setUser } = useContext(UserContext);
-    // const { username, setUsername } = useContext(UserContext);
 
     const { user, setUser } = useUser();
     const { username, setUsername } = useUser();
+    const { contacts, setContacts } = useUser();
 
     const [loginPage, setLoginPage] = useState('login');
     const [newUsername, setNewUsername] = useState('');
@@ -54,6 +53,12 @@ const Login = props => {
                 .then(res => {
                     setAllSent(res.data)
                     setIsLoading(false)
+                })
+            
+            service.getContacts(localStorage.getItem('token'))
+                .then(res => {
+                    setContacts(res.data.contacts)
+                    console.log(res.data.contacts)
                 })
         } else {
             setIsLoading(false);
@@ -104,6 +109,8 @@ const Login = props => {
         setLoginPassword('')
         const getSentMail = await service.getSent(token.data.accessToken)
         setAllSent(getSentMail.data)
+        const contactsList = await service.getContacts(token.data.accessToken)
+        setContacts(contactsList)
         setIsLoading(e => false)
     }
 

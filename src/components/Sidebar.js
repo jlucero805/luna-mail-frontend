@@ -7,6 +7,7 @@ import LoginContext from '../Contexts/LoginContext'
 import service from '../services/service'
 import { MailProvider, useMail } from '../Contexts/MailProvider'
 import { NewMailProvider, useNewMail } from '../Contexts/NewMailProvider'
+import { UserProvider, useUser } from '../Contexts/UserProvider'
 
 const Sidebar = props => {
     const {allMail, setAllMail} = useMail();
@@ -18,8 +19,9 @@ const Sidebar = props => {
     const { titleInput, setTitleInput } = useNewMail();
     const { textAreaInput, setTextAreaInput } = useNewMail();
 
-    const { user, setUser } = useContext(UserContext);
-    const { username, setUsername } = useContext(UserContext);
+    const { user, setUser } = useUser();
+    const { username, setUsername } = useUser();
+    const { contacts, setContacts } = useUser();
 
     const { login, setLogin } = useContext(LoginContext);
 
@@ -73,9 +75,14 @@ const Sidebar = props => {
     const newMailClicker = () => { setPage('new-mail') }
     const inboxClicker = () => { setPage('inbox') }
     const sentClicker = () => { setPage('sent') }
-    const contactsClicker = () => {setPage('contacts')}
     const settingsClicker = () => {setPage('settings')}
     const aboutClicker = () => { setPage('about') }
+
+    const contactsClicker = async () => {
+        setPage('contacts')
+        const contactList = await service.getContacts(user);
+        setContacts(contactList.data.contacts);
+    }
 
     const logoutClicker = () => {
         if (window.confirm('Are you sure you want to logout?')) {
