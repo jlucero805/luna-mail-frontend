@@ -5,6 +5,7 @@ import NewMailContext from '../Contexts/NewMailContext'
 import { MailProvider, useMail } from '../Contexts/MailProvider'
 import { NewMailProvider, useNewMail } from '../Contexts/NewMailProvider'
 import { UserProvider, useUser } from '../Contexts/UserProvider'
+import service from '../services/service'
 
 const Content = props => {
     const { allMail, setAllMail } = useMail();
@@ -16,7 +17,9 @@ const Content = props => {
     const { titleInput, setTitleInput } = useNewMail();
     const { textAreaInput, setTextAreaInput } = useNewMail();
 
+    const { user, setUser } = useUser();
     const { contacts, setContacts } = useUser();
+    const { contactInput, setContactInput } = useUser();
 
     const mailClicker = mail => {
         setSingleMail(mail);
@@ -26,10 +29,33 @@ const Content = props => {
     const toInputChanger = e => { setToInput(e) }
     const titleInputChanger = e => { setTitleInput(e) }
     const textAreaInputChanger = e => { setTextAreaInput(e) }
+    const contactInputChanger = e => { setContactInput(e) }
 
     const respondContact = con => {
         setPage('new-mail');
         setToInput(con);
+    }
+
+    const addContact = async () => {
+        if (!contacts.find(contact => contact === contactInput)) {
+            const con = await service.addContact(user, { newContact: contactInput });
+            if (con.data.results === "success") {
+                setContacts(old => old.concat([contactInput]));
+                window.alert(`${contactInput} added succesfully!`);
+            } else {
+                window.alert(`${contactInput} does not exist!`);
+            }
+            setContactInput("");
+        } else {
+            window.alert(`${contactInput} already exists!`);
+        }
+    }
+
+    const delContact = async (con) => {
+        if (window.confirm(`do you want to delete ${con} from your contacts?`)) {
+            const all = await service.setContacts(user, { contacts: contacts.filter(one => one !== con) });
+            setContacts(all => all.filter(name => name !== con));
+        }
     }
 
     return (
@@ -105,13 +131,17 @@ const Content = props => {
             {/* contacts */}
             <div className={page === 'contacts' ? 'mail-detail' : 'none'}>
                 <h2>Contacts</h2>
-                {contacts
+                <div className="add-contact">
+                    <input onChange={e => contactInputChanger(e.target.value)} value={contactInput} className="add-contact-in"></input>
+                    <div onClick={addContact} className="add-contact-btn">add</div>
+                </div>
+                {contacts.length > 0
                     ? contacts.map(contact => (
                         <div className="single-contact" key={contact}>
                             <p className="text">{contact}</p>
                             <div className="contact-btns">
                                 <div onClick={() => respondContact(contact)} className="contact-msg">msg</div>
-                                <div className="contact-del">del</div>
+                                <div onClick={() => delContact(contact)} className="contact-del">del</div>
                             </div>
                         </div>
                     ))
@@ -122,7 +152,7 @@ const Content = props => {
             {/* settings */}
             <div className={page === 'settings' ? 'mail-detail' : 'none'}>
                 <h2>Settings</h2>
-                <p className="text">settings</p>
+                <p className="text">auto-login on</p>
             </div>
         </>
     )

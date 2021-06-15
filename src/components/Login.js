@@ -6,6 +6,7 @@ import UserContext from '../Contexts/UserContext'
 import { MailProvider, useMail } from '../Contexts/MailProvider'
 import { LoginProvider, useLogin } from '../Contexts/LoginProvider'
 import { UserProvider, useUser } from '../Contexts/UserProvider'
+import { SettingsProvider, useSettings } from '../Contexts/SettingsProvider'
 
 const Login = props => {
     const { loginUsername, setLoginUsername } = useContext(LoginContext);
@@ -25,6 +26,8 @@ const Login = props => {
     const [newUsername, setNewUsername] = useState('');
     const [newPassword, setNewPassword] = useState('');
 
+    const {autoLogin, setAutoLogin} = useSettings();
+
     //auto login if token is in localStorage
     useEffect(() => {
         setIsLoading(true)
@@ -32,7 +35,7 @@ const Login = props => {
             username: "this will never work 092348",
             passHash: 'haha asl; fdalk939465466   23 never'
         })
-        if (localStorage.getItem('token')) {
+        if (localStorage.getItem('token') && autoLogin) {
             setIsLoading(true)
             service.getMail(localStorage.getItem('token'))
                 .then(res => {
@@ -110,7 +113,7 @@ const Login = props => {
         const getSentMail = await service.getSent(token.data.accessToken)
         setAllSent(getSentMail.data)
         const contactsList = await service.getContacts(token.data.accessToken)
-        setContacts(contactsList)
+        setContacts(contactsList.data.contacts)
         setIsLoading(e => false)
     }
 

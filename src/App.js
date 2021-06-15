@@ -10,6 +10,7 @@ import { MailProvider } from './Contexts/MailProvider'
 import { NewMailProvider } from './Contexts/NewMailProvider';
 import { LoginProvider } from './Contexts/LoginProvider';
 import { UserProvider } from './Contexts/UserProvider'
+import { SettingsProvider } from './Contexts/SettingsProvider'
 
 /*
 TODO
@@ -35,9 +36,10 @@ function App() {
   const fullscreenClicker = () => { setFullscreen(prev => !prev) }
 
   return (
-    <MailProvider>
-      <NewMailProvider>
-        {/* <UserContext.Provider value={{
+    <SettingsProvider>
+      <MailProvider>
+        <NewMailProvider>
+          {/* <UserContext.Provider value={{
           user, setUser,
           username, setUsername
         }}> */}
@@ -48,22 +50,23 @@ function App() {
               setLoginUsername, setLoginPassword,
               isLoading, setIsLoading
             }}>
-            {login
-              ? <Login />
-              : <div className={!fullscreen ? "container" : "container-gone"}>
-                <Sidebar
-                  fullscreen={fullscreen}
-                />
-                <Nav
-                  fullscreen={fullscreen}
-                  fullscreenClicker={fullscreenClicker} />
-                <Content />
-              </div>}
+              {login
+                ? <Login />
+                : <div className={!fullscreen ? "container" : "container-gone"}>
+                  <Sidebar
+                    fullscreen={fullscreen}
+                  />
+                  <Nav
+                    fullscreen={fullscreen}
+                    fullscreenClicker={fullscreenClicker} />
+                  <Content />
+                </div>}
             </LoginContext.Provider>
           </UserProvider>
-        {/* </UserContext.Provider> */}
-      </NewMailProvider>
-    </MailProvider >
+          {/* </UserContext.Provider> */}
+        </NewMailProvider>
+      </MailProvider >
+    </SettingsProvider>
   )
 }
 
