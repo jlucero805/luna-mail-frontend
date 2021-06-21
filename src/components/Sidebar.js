@@ -8,6 +8,7 @@ import service from '../services/service'
 import { MailProvider, useMail } from '../Contexts/MailProvider'
 import { NewMailProvider, useNewMail } from '../Contexts/NewMailProvider'
 import { UserProvider, useUser } from '../Contexts/UserProvider'
+import { strings } from '../res/variables'
 
 const Sidebar = props => {
     const {allMail, setAllMail} = useMail();
@@ -102,27 +103,27 @@ const Sidebar = props => {
         <div className={!props.fullscreen ? "sidebar" : "sidebar-gone"}>
             <img src={logo} alt="Luna Mail" className="logo"></img>
             <div className={page == 'detail' ? 'side-btns-new-mail' : 'side-btns none-1'}>
-                <div onClick={() => replyClicker()} className="btn-pop">reply</div>
-                <div onClick={() => deleteClicker()} className="btn-pop">delete</div>
+                <div onClick={() => replyClicker()} className="btn-pop">{strings.SIDEBAR_REPLY}</div>
+                <div onClick={() => deleteClicker()} className="btn-pop">{strings.SIDEBAR_DELETE}</div>
             </div>
             <div className={page == 'inbox' ? 'side-btns-new-mail' : 'side-btns none'}>
-                <div onClick={() => refreshClicker()} className="btn-pop">refresh</div>
+                <div onClick={() => refreshClicker()} className="btn-pop">{strings.SIDEBAR_REFRESH}</div>
             </div>
             <div className={page == 'sent' ? 'side-btns-new-mail' : 'side-btns none'}>
-                <div onClick={() => refreshClicker()} className="btn-pop">refresh</div>
+                <div onClick={() => refreshClicker()} className="btn-pop">{strings.SIDEBAR_REFRESH}</div>
             </div>
             <div className={page == 'new-mail' ? 'side-btns-new-mail' : 'side-btns none'}>
-                <div onClick={() => sendClicker()} className="btn-pop">send</div>
-                <div onClick={() => newMailClear()} className="btn-pop">clear</div>
+                <div onClick={() => sendClicker()} className="btn-pop">{strings.SIDEBAR_SEND}</div>
+                <div onClick={() => newMailClear()} className="btn-pop">{strings.SIDEBAR_CLEAR}</div>
             </div>
             <div className="side-btns">
-                <div onClick={() => newMailClicker()} className="btn">new mail</div>
-                <div onClick={() => inboxClicker()} className="btn">inbox</div>
-                <div onClick={() => sentClicker()} className="btn">sent</div>
-                <div onClick={() => contactsClicker()} className="btn">contacts</div>
-                <div onClick={() => settingsClicker()} className="btn">settings</div>
-                <div onClick={() => aboutClicker()} className="btn">about</div>
-                <div onClick={() => logoutClicker()} className="btn logout-text">logout</div>
+                <div onClick={() => newMailClicker()} className="btn">{strings.SIDEBAR_NEW_MAIL}</div>
+                <div onClick={() => inboxClicker()} className="btn">{strings.SIDEBAR_INBOX}</div>
+                <div onClick={() => sentClicker()} className="btn">{strings.SIDEBAR_SENT}</div>
+                <div onClick={() => contactsClicker()} className="btn">{strings.SIDEBAR_CONTACTS}</div>
+                <div onClick={() => settingsClicker()} className="btn">{strings.SIDEBAR_SETTINGS}</div>
+                <div onClick={() => aboutClicker()} className="btn">{strings.SIDEBAR_ABOUT}</div>
+                <div onClick={() => logoutClicker()} className="btn logout-text">{strings.SIDEBAR_LOGOUT}</div>
             </div>
         </div>
     )

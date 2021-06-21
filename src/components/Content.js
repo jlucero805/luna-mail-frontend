@@ -6,6 +6,7 @@ import { MailProvider, useMail } from '../Contexts/MailProvider'
 import { NewMailProvider, useNewMail } from '../Contexts/NewMailProvider'
 import { UserProvider, useUser } from '../Contexts/UserProvider'
 import service from '../services/service'
+import { strings } from '../res/variables'
 
 const Content = props => {
     const { allMail, setAllMail } = useMail();
@@ -116,15 +117,11 @@ const Content = props => {
             {/* about page */}
             <div className={page === 'about' ? 'mail-detail' : 'none'}>
                 <h2>Luna Mail</h2>
-                <p className="text">This is a personal project that I created in order to
-                    learn more about full stack web development. The technologies
-                    that I used to build this app include MongoDB, Express, Node.js, and React to
-                    complete the MERN stack. This is an ongoing project where I explore various
-                    facets of full stack development such as devops, and cyber security.</p>
-                <p className="text">Come check out the project at:</p>
-                <p className="text">Frontend code:</p>
+                <p className="text">{strings.ABOUT_TEXT_BODY}</p>
+                <p className="text">{strings.ABOUT_TEXT_HEADER_1}</p>
+                <p className="text">{strings.ABOUT_TEXT_HEADER_2}</p>
                 <a href="https://github.com/jlucero805/luna-mail-frontend" className="text">github.com/jlucero805/luna-mail-frontend</a>
-                <p className="text">Backend code:</p>
+                <p className="text">{strings.ABOUT_TEXT_HEADER_3}</p>
                 <a href="https://github.com/jlucero805/luna-mail-back" target="_blank" className="text">github.com/jlucero805/luna-mail-back</a>
             </div>
 
@@ -133,26 +130,26 @@ const Content = props => {
                 <h2>Contacts</h2>
                 <div className="add-contact">
                     <input onChange={e => contactInputChanger(e.target.value)} value={contactInput} className="add-contact-in"></input>
-                    <div onClick={addContact} className="add-contact-btn">add</div>
+                    <div onClick={addContact} className="add-contact-btn">{strings.CONTACT_ADD}</div>
                 </div>
                 {contacts.length > 0
                     ? contacts.map(contact => (
                         <div className="single-contact" key={contact}>
                             <p className="text">{contact}</p>
                             <div className="contact-btns">
-                                <div onClick={() => respondContact(contact)} className="contact-msg">msg</div>
-                                <div onClick={() => delContact(contact)} className="contact-del">del</div>
+                                <div onClick={() => respondContact(contact)} className="contact-msg">{strings.CONTACT_RESPOND}</div>
+                                <div onClick={() => delContact(contact)} className="contact-del">{strings.CONTACT_DELETE}</div>
                             </div>
                         </div>
                     ))
-                    : <p className="contact-text">You have 0 contacts</p>}
+                    : <p className="contact-text">{strings.CONTACT_EMPTY}</p>}
 
             </div>
 
             {/* settings */}
             <div className={page === 'settings' ? 'mail-detail' : 'none'}>
-                <h2>Settings</h2>
-                <p className="text">auto-login on</p>
+                <h2>{strings.SETTINGS_HEADER}</h2>
+                <p className="text">{strings.SETTINGS_AUTO_LOGIN}</p>
             </div>
         </>
     )
